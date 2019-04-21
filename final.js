@@ -6,8 +6,8 @@ let radius = 10;
 let dx = 3;
 let dy = -3;
 let paddleHeight = 12;
-let row = 1//16;
-let column = 1//9;
+let row = 16;
+let column = 9;
 let brickWidth = 50;
 let brickHeight = 20;
 let brickPadding = 3;
@@ -46,19 +46,20 @@ document.addEventListener("keydown", function(event){
     });
 
     window.onload = function(){
+        document.getElementById("restart").onclick = restart;
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         paddleX = (canvas.width-paddleWidth)/2;
         initBrick()
         draw();
         post();
+        
     }
 
     function draw () {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
         drawPaddle();
         drawBricks();
         drawBall();
@@ -85,7 +86,7 @@ document.addEventListener("keydown", function(event){
                     lives--;
                     if(lives==0) {
                         if (confirm("GAME OVER!")) {
-                            document.location.reload();
+                            window.location.reload();
                     }
                 }
                     else {
@@ -144,7 +145,8 @@ document.addEventListener("keydown", function(event){
                         b[2] = 0;
                         score++;
                         if(win()) {
-                            if (confirm("YOU WIN, CONGRATS! Enter your name:")) {
+                            begin = -1
+                            if (confirm("YOU WIN, CONGRATS! Enter Your Name!")) {
                                 getname();
                             }
                         }
@@ -183,7 +185,7 @@ document.addEventListener("keydown", function(event){
                     bricks[col][ro][1] = brickY;
                     ctx.beginPath();
                     ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                    ctx.fillStyle = "#0095DD";
+                    ctx.fillStyle = "brown";
                     ctx.fill();
                     ctx.closePath();
                 }
@@ -194,21 +196,21 @@ document.addEventListener("keydown", function(event){
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.font = "16px Arial";
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = "#red";
         ctx.fillText("Score: "+score, 8, 20);
     }
     function drawLives() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.font = "16px Arial";
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = "red";
         ctx.fillText("Lives "+lives, canvas.width-65, 20);
     }
     function drawMulti() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.font = "16px Arial";
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = "red";
         ctx.fillText("Multi Hit * "+multiHit, canvas.width/2-30, 20);
     }
     function win(){
@@ -229,15 +231,11 @@ document.addEventListener("keydown", function(event){
         username.value = 'username';
         username.setAttribute('id','username');
         let submit = document.createElement('button');
-        let restart = document.createElement('button');
         submit.innerHTML = "Submit";
-        restart.innerHTML = "Restart";
         submit.onclick = sendscore;
-        restart.onclick = restart;
         let getinput = document.getElementById("name");
         getinput.appendChild(username);
         getinput.appendChild(submit);
-        getinput.appendChild(restart);
     }
 
     function post(){
@@ -263,7 +261,7 @@ document.addEventListener("keydown", function(event){
                 result.appendChild(table);
                 let json = JSON.parse(responseText);//get message json
                 let record = json.record;//set message list
-                for (let i=0; i<5; i++) {//iterate through books list
+                for (let i=0; i<10; i++) {//iterate through books list
                     let row = document.createElement('tr');//create the row
                     let name = document.createElement("td");//create a title paragraph
                     name.setAttribute('class', 'name');
@@ -278,40 +276,6 @@ document.addEventListener("keydown", function(event){
                     row.appendChild(name);//append name to message
                     row.appendChild(score);//append comment to message
                     table.appendChild(row);//append message to comments
-                }
-            })
-            .catch(function(error){ 
-            });
-    }
-
-    function postcurrent(){
-        fetch("http://localhost:3000")//fetch all messages
-            .then(checkStatus)//check status
-            .then(function(responseText) {
-                let current = document.getElementById("current");//get comments div
-                let name = document.getElementById("username");
-                var table = document.createElement("table");
-                let tr = document.createElement("tr");//create head tr
-                let th1 = document.createElement('th');//create first column
-                let th2 = document.createElement('th');//create second column
-                let th3 = document.createElement('th');//create third column
-                let title = document.createElement('h2');
-                title.innerHTML = "Your ranking";
-                console.log(currentname);
-                table.appendChild(tr);//append row to table
-                tr.appendChild(th1);//append column to row
-                tr.appendChild(th2);//append column to row
-                tr.appendChild(th3);//append column to row
-                current.appendChild(title);
-                current.appendChild(table);
-                let json = JSON.parse(responseText);//get message json
-                let record = json.record;//set message list
-                for (let i=0; i<record.length; i++) {//iterate through books list
-                    if (record[i]['name'] == name) {
-                        th2.innerHTML = name;
-                        th3.innerHTML = record[i]['score'];
-                        th1.innerHTML = i + 1;
-                    }
                 }
             })
             .catch(function(error){ 
@@ -336,7 +300,8 @@ document.addEventListener("keydown", function(event){
         fetch("http://localhost:3000", fetchOptions)//post to service
             .then(checkStatus)
             .then(function(responseText) {
-                console.log(responseText);
+                alert("Your Ranking was Saved!");
+                setTimeout(restart,100)
             })
             .catch(function(error){ 
             });
