@@ -1,0 +1,32 @@
+body{ padding: 0; margin: 0; } 
+canvas { background: #eee; display: block; margin: 0 auto; }
+h1 {
+    text-align: center;
+}
+
+table {
+    border:1px solid #dad9d4;
+    border-collapse: collapse;
+    width: 30%;
+    margin: auto;
+}
+
+/*set td*/
+td {
+    border-top: 1px solid #dad9d4;
+    border-bottom: 1px solid #dad9d4;
+}
+
+.num{
+    text-align: left;
+}
+
+/*align title to center*/
+.name {
+    text-align: center;
+}
+
+/*align years column to right*/
+.score {
+    text-align: right;
+} 
