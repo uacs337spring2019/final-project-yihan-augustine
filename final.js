@@ -239,7 +239,7 @@ document.addEventListener("keydown", function(event){
     }
 
     function post(){
-        fetch("http://localhost:3000")//fetch all messages
+        fetch("http://hitthebricks.herokuapp.com:process.env.PORT")//fetch all messages
             .then(checkStatus)//check status
             .then(function(responseText) {
                 let result = document.getElementById("result");//get comments div
@@ -297,7 +297,7 @@ document.addEventListener("keydown", function(event){
             },
             body : JSON.stringify(ranking)
         }
-        fetch("http://localhost:3000", fetchOptions)//post to service
+        fetch("http://http://hitthebricks.herokuapp.com:process.env.PORT", fetchOptions)//post to service
             .then(checkStatus)
             .then(function(responseText) {
                 alert("Your Ranking was Saved!");
