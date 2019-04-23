@@ -21,6 +21,7 @@ let y = 900;
 let paddleX = 412.5;
 let multiHit = 0;
 
+//monitor the action of direction key
 document.addEventListener("keydown", function(event){
     if(event.keyCode == 39) {
             rightarrow = true;
@@ -31,6 +32,8 @@ document.addEventListener("keydown", function(event){
             console.log(1)
         }
     });
+
+//monitor the action of direction key
 document.addEventListener("keyup", function(event){
     if(event.keyCode == 39) {
             rightarrow = false;
@@ -39,6 +42,8 @@ document.addEventListener("keyup", function(event){
             leftarrow = false;
         }
     });
+
+//monitor the action of space key
 document.addEventListener("keydown", function(event){
     if(event.keyCode == 32) {
             begin = -begin;
@@ -52,22 +57,24 @@ document.addEventListener("keydown", function(event){
         paddleX = (canvas.width-paddleWidth)/2;
         initBrick()
         draw();
-        post();
+        //post();
         
     }
 
+    //draw the canvas area and run it as designed.
     function draw () {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawPaddle();
-        drawBricks();
-        drawBall();
-        drawScore();
-        drawLives();
-        collisionDetection();
-        paddleControl()
-        drawMulti();
+        displayBricks();
+        Ball();
+        Score();
+        livesLeft();
+        hitOnBricks();
+        paddleMove()
+        multiHitCount();
+        //determine the motion of the ball
         if(begin==1){
             if(x + dx > canvas.width-radius || x + dx < radius) {
                 dx = -dx;
@@ -102,9 +109,10 @@ document.addEventListener("keydown", function(event){
             x += dx;
             y += dy;
         }
-        window.requestAnimationFrame(draw);
+        window.requestAnimationFrame(draw);//let the area to be a Animation area
     }
 
+    //set the format of bricks
     function initBrick(){
         for(let col=0; col<column; col++) {
             bricks[col] = [];
@@ -119,8 +127,8 @@ document.addEventListener("keydown", function(event){
         }
     }
 
-    
-    function paddleControl(){
+    //control how the paddle move
+    function paddleMove(){
         if(rightarrow==true && paddleX<900-paddleWidth/2) {
             paddleX += 7;
         }
@@ -129,7 +137,7 @@ document.addEventListener("keydown", function(event){
         }
     }
 
-    function collisionDetection() {
+    function hitOnBricks() {
         for(let col=0; col<column; col++) {
             for(let ro=0; ro<row; ro++) {
                 let b = bricks[col][ro];
@@ -155,7 +163,7 @@ document.addEventListener("keydown", function(event){
             }
         }
     }
-    function drawBall() {
+    function Ball() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.beginPath();
@@ -173,7 +181,7 @@ document.addEventListener("keydown", function(event){
         ctx.fill();
         ctx.closePath();
     }
-    function drawBricks() {
+    function displayBricks() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         for(let col=0; col<column; col++) {
@@ -192,21 +200,21 @@ document.addEventListener("keydown", function(event){
             }
         }
     }
-    function drawScore() {
+    function Score() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.font = "16px Arial";
         ctx.fillStyle = "#red";
         ctx.fillText("Score: "+score, 8, 20);
     }
-    function drawLives() {
+    function livesLeft() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.font = "16px Arial";
         ctx.fillStyle = "red";
         ctx.fillText("Lives "+lives, canvas.width-65, 20);
     }
-    function drawMulti() {
+    function multiHitCount() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         ctx.font = "16px Arial";
@@ -239,7 +247,7 @@ document.addEventListener("keydown", function(event){
     }
 
     function post(){
-        fetch("http://hitthebricks.herokuapp.com:process.env.PORT")//fetch all messages
+        fetch("http://hitthebricks.herokuapp.com:"+ process.env.PORT)//fetch all messages
             .then(checkStatus)//check status
             .then(function(responseText) {
                 let result = document.getElementById("result");//get comments div
@@ -297,7 +305,7 @@ document.addEventListener("keydown", function(event){
             },
             body : JSON.stringify(ranking)
         }
-        fetch("http://http://hitthebricks.herokuapp.com:process.env.PORT", fetchOptions)//post to service
+        fetch("http://hitthebricks.herokuapp.com:"+process.env.PORT, fetchOptions)//post to service
             .then(checkStatus)
             .then(function(responseText) {
                 alert("Your Ranking was Saved!");
@@ -308,7 +316,7 @@ document.addEventListener("keydown", function(event){
 
     }
 
-    /** This is a function for check service status.*/
+    /** This is a function for check service status.*/ 
     function checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
             return response.text();
@@ -317,4 +325,4 @@ document.addEventListener("keydown", function(event){
             return Promise.reject(new Error(response.status+":"+response.statusText));
         }
     }
-    
+ 
