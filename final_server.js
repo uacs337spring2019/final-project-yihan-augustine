@@ -4,7 +4,7 @@ const app = express();
 var fs = require('fs');//read file module
 const bodyParser = require('body-parser');//body-parser module
 const jsonParser = bodyParser.json();
-app.use(express.static('public'));
+
 
 app.use(function(req, res, next) {//use function
     res.header("Access-Control-Allow-Origin", "*");
@@ -12,6 +12,8 @@ app.use(function(req, res, next) {//use function
                "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+app.use(express.static('public'));
 
 app.post('/', jsonParser, function (req, res) {//post function
     const name = req.body.name;//name
