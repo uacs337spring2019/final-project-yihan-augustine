@@ -21,19 +21,17 @@ let y = 900;
 let paddleX = 412.5;
 let multiHit = 0;
 
-//monitor the action of direction key
+/**monitor the action of direction key*/
 document.addEventListener("keydown", function(event){
     if(event.keyCode == 39) {
             rightarrow = true;
-            console.log(1)
         }
     if(event.keyCode == 37) {
             leftarrow = true;
-            console.log(1)
         }
     });
 
-//monitor the action of direction key
+/**monitor the action of direction key*/
 document.addEventListener("keyup", function(event){
     if(event.keyCode == 39) {
             rightarrow = false;
@@ -43,7 +41,7 @@ document.addEventListener("keyup", function(event){
         }
     });
 
-//monitor the action of space key
+/**monitor the action of space key*/
 document.addEventListener("keydown", function(event){
     if(event.keyCode == 32) {
             begin = -begin;
@@ -55,13 +53,13 @@ document.addEventListener("keydown", function(event){
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
         paddleX = (canvas.width-paddleWidth)/2;
-        initBrick()
+        initBrick();
         draw();
-        //post();
+        post();
         
     }
 
-    //draw the canvas area and run it as designed.
+    /**draw the canvas area and run it as designed.*/
     function draw () {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
@@ -72,7 +70,7 @@ document.addEventListener("keydown", function(event){
         Score();
         livesLeft();
         hitOnBricks();
-        paddleMove()
+        paddleMove();
         multiHitCount();
         //determine the motion of the ball
         if(begin==1){
@@ -86,7 +84,7 @@ document.addEventListener("keydown", function(event){
             else if(y + dy > canvas.height-radius) {
                 if(x > paddleX && x < paddleX + paddleWidth) {
                     dy = -dy;
-                    score = score+multiHit
+                    score = score+multiHit;
                     multiHit = 0;
                 }
                 else {
@@ -112,7 +110,7 @@ document.addEventListener("keydown", function(event){
         window.requestAnimationFrame(draw);//let the area to be a Animation area
     }
 
-    //set the format of bricks
+    /**set the format of bricks*/
     function initBrick(){
         for(let col=0; col<column; col++) {
             bricks[col] = [];
@@ -127,7 +125,7 @@ document.addEventListener("keydown", function(event){
         }
     }
 
-    //control how the paddle move
+    /**control how the paddle move*/
     function paddleMove(){
         if(rightarrow==true && paddleX<900-paddleWidth/2) {
             paddleX += 7;
@@ -137,6 +135,7 @@ document.addEventListener("keydown", function(event){
         }
     }
 
+    /**determine the brick is hit or not, return win information when no brick left*/
     function hitOnBricks() {
         for(let col=0; col<column; col++) {
             for(let ro=0; ro<row; ro++) {
@@ -144,16 +143,17 @@ document.addEventListener("keydown", function(event){
                 if(b[2] == 1) {
                     if(x > b[0] && x < b[0]+brickWidth && y > b[1] && y < b[1]+brickHeight) {
                         if(dy>0){
-                            dy = -dy-0.1;
-                            multiHit += 1
+                            dy = -dy-0.1; //accelerate the ball
+                            multiHit += 1; //count multi-hit extra score
                         }else{
-                            dy = -dy+0.1;
-                            multiHit += 1
+                            dy = -dy+0.1; //accelerate the ball
+                            multiHit += 1; //count multi-hit extra score
                         }
                         b[2] = 0;
                         score++;
+                        //if no brick left
                         if(win()) {
-                            begin = -1
+                            begin = -1;
                             if (confirm("YOU WIN, CONGRATS! Enter Your Name!")) {
                                 getname();
                             }
@@ -163,6 +163,8 @@ document.addEventListener("keydown", function(event){
             }
         }
     }
+
+    /**draw the ball*/
     function Ball() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
@@ -172,6 +174,8 @@ document.addEventListener("keydown", function(event){
         ctx.fill();
         ctx.closePath();
     }
+
+    /**draw the paddle*/
     function drawPaddle() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
@@ -181,6 +185,8 @@ document.addEventListener("keydown", function(event){
         ctx.fill();
         ctx.closePath();
     }
+    
+    /**determine which bricks are still on the screen and print it out*/
     function displayBricks() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
@@ -200,6 +206,8 @@ document.addEventListener("keydown", function(event){
             }
         }
     }
+
+    /**print score on the top*/
     function Score() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
@@ -207,6 +215,8 @@ document.addEventListener("keydown", function(event){
         ctx.fillStyle = "#red";
         ctx.fillText("Score: "+score, 8, 20);
     }
+    
+    /**print how many lives left on the top*/
     function livesLeft() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
@@ -214,6 +224,8 @@ document.addEventListener("keydown", function(event){
         ctx.fillStyle = "red";
         ctx.fillText("Lives "+lives, canvas.width-65, 20);
     }
+
+    /**print multihit score on the top*/
     function multiHitCount() {
         let canvas = document.getElementById("myCanvas");
         let ctx = canvas.getContext("2d");
@@ -221,18 +233,21 @@ document.addEventListener("keydown", function(event){
         ctx.fillStyle = "red";
         ctx.fillText("Multi Hit * "+multiHit, canvas.width/2-30, 20);
     }
+    
+    /**traverse the bricks array to find out if there brick left*/
     function win(){
         for(let col=0; col<column; col++) {
             for(let ro=0; ro<row; ro++) {
                 let b = bricks[col][ro];
                 if (b[2]==1){
-                    return false
+                    return false;
                 }
             }
         }
-        return true
+        return true;
     }
 
+    //build div which can input player name
     function getname() {
         let username = document.createElement('input');
         username.type = "text";
@@ -245,7 +260,8 @@ document.addEventListener("keydown", function(event){
         getinput.appendChild(username);
         getinput.appendChild(submit);
     }
-
+    
+    /**post ranking information to the screen*/
     function post(){
         fetch("https://hit-bricks.herokuapp.com:"+ process.env.PORT)//fetch all messages
             .then(checkStatus)//check status
@@ -289,11 +305,12 @@ document.addEventListener("keydown", function(event){
             .catch(function(error){ 
             });
     }
-
+    
+    /**refresh the page to restart game*/
     function restart(){
         window.location.reload();
     }
-    /** This is a function for sending name and message.*/
+    /** sending player name and score.*/
     function sendscore() {
         let username = document.getElementById('username').value;//get name input
         const ranking = {name:username, score:score};//construct message json
