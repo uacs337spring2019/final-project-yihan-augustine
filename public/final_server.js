@@ -18,15 +18,21 @@ app.use(express.static('public'));
 app.post('/', jsonParser, function (req, res) {//post function
     const name = req.body.name;//name
     const score = req.body.score;//message
-    const filecontent = "\n" + name + ':::' + score;//string append to file
+    const filecontent = name + ':::' + score;//string append to file
+    fs.appendFile("messages.txt","\n", function(err){ 
+        if(err) {
+            res.send("Error");
+            console.log(err);
+        }
+    });
     fs.appendFile('scores.txt', filecontent, function(err) {//append to file
         if(err) {
-             console.log(err);
-             res.status(400);//return error message
+            res.send("Error");
+            console.log(err);//return error message
         }
         console.log("The file was saved!");//if it is saved successfully
-});
-    res.send(filecontent);//send string
+    });
+    res.send("The file was saved!");//send string
 });
 
 app.get('/', function (req, res) {//get function
@@ -50,3 +56,4 @@ app.get('/', function (req, res) {//get function
 })
 
 app.listen(process.env.PORT);
+
