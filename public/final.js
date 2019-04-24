@@ -51,7 +51,7 @@ document.addEventListener("keydown", function(event){
     window.onload = function(){
         document.getElementById("restart").onclick = restart;
         let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
+        let context = canvas.getContext("2d");
         paddleX = (canvas.width-paddleWidth)/2;
         initBrick();
         draw();
@@ -62,8 +62,8 @@ document.addEventListener("keydown", function(event){
     /**draw the canvas area and run it as designed.*/
     function draw () {
         let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
         drawPaddle();
         displayBricks();
         Ball();
@@ -128,10 +128,10 @@ document.addEventListener("keydown", function(event){
     /**control how the paddle move*/
     function paddleMove(){
         if(rightarrow==true && paddleX<900-paddleWidth/2) {
-            paddleX += 7;
+            paddleX += 8;
         }
         if(leftarrow==true && paddleX>0-paddleWidth/2) {
-            paddleX -= 7;
+            paddleX -= 8;
         }
     }
 
@@ -167,29 +167,29 @@ document.addEventListener("keydown", function(event){
     /**draw the ball*/
     function Ball() {
         let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI*2);
-        ctx.fillStyle = "black";
-        ctx.fill();
-        ctx.closePath();
+        let context = canvas.getContext("2d");
+        context.beginPath();
+        context.arc(x, y, radius, 0, Math.PI*2);
+        context.fillStyle = "black";
+        context.fill();
+        context.closePath();
     }
 
     /**draw the paddle*/
     function drawPaddle() {
         let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
-        ctx.beginPath();
-        ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-        ctx.fillStyle = "black";
-        ctx.fill();
-        ctx.closePath();
+        let context = canvas.getContext("2d");
+        context.beginPath();
+        context.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+        context.fillStyle = "black";
+        context.fill();
+        context.closePath();
     }
     
     /**determine which bricks are still on the screen and print it out*/
     function displayBricks() {
         let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
+        let context = canvas.getContext("2d");
         for(let col=0; col<column; col++) {
             for(let ro=0; ro<row; ro++) {
                 if(bricks[col][ro][2] == 1) {
@@ -197,11 +197,11 @@ document.addEventListener("keydown", function(event){
                     let brickY = (col*(brickHeight+brickPadding))+brickOffsetTop;
                     bricks[col][ro][0] = brickX;
                     bricks[col][ro][1] = brickY;
-                    ctx.beginPath();
-                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                    ctx.fillStyle = "brown";
-                    ctx.fill();
-                    ctx.closePath();
+                    context.beginPath();
+                    context.rect(brickX, brickY, brickWidth, brickHeight);
+                    context.fillStyle = "brown";
+                    context.fill();
+                    context.closePath();
                 }
             }
         }
@@ -210,28 +210,28 @@ document.addEventListener("keydown", function(event){
     /**print score on the top*/
     function Score() {
         let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#red";
-        ctx.fillText("Score: "+score, 8, 20);
+        let context = canvas.getContext("2d");
+        context.font = "16px Arial";
+        context.fillStyle = "#red";
+        context.fillText("Score: "+score, 8, 20);
     }
     
     /**print how many lives left on the top*/
     function livesLeft() {
         let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "red";
-        ctx.fillText("Lives "+lives, canvas.width-65, 20);
+        let context = canvas.getContext("2d");
+        context.font = "16px Arial";
+        context.fillStyle = "red";
+        context.fillText("Lives "+lives, canvas.width-65, 20);
     }
 
     /**print multihit score on the top*/
     function multiHitCount() {
         let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "red";
-        ctx.fillText("Multi Hit * "+multiHit, canvas.width/2-30, 20);
+        let context = canvas.getContext("2d");
+        context.font = "16px Arial";
+        context.fillStyle = "red";
+        context.fillText("Multi Hit * "+multiHit, canvas.width/2-30, 20);
     }
     
     /**traverse the bricks array to find out if there brick left*/
