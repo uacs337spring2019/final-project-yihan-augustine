@@ -2,7 +2,7 @@
   "name": "final",
   "version": "1.0.0",
   "description": "final",
-  "main": "final.js",
+  "start": "final.js",
   "dependencies": {
     "client-sessions": "^0.8.0",
     "cookie-parser": "^1.4.4",
