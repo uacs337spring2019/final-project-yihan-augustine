@@ -1,0 +1,28 @@
+{
+  "name": "final",
+  "version": "1.0.0",
+  "description": "final",
+  "main": "final_server.js",
+  "dependencies": {
+    "client-sessions": "^0.8.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "fs": "^0.0.1-security",
+    "mysql": "^2.17.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node final_server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Allen&Augustine",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uacs337spring2019/final-project-yihan-augustine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uacs337spring2019/final-project-yihan-augustine/issues"
+  },
+  "homepage": "https://github.com/uacs337spring2019/final-project-yihan-augustine/final_server.js"
+}
