@@ -1,7 +1,18 @@
-body{ padding: 0; margin: 0; } 
-canvas { background: #eee; display: block; margin: 0 auto; }
+body{ 
+    padding: 0; 
+    margin: 0;
+    background-color: #E0FFFF;
+    font-family: Arial, Helvetica, sans-serif;
+} 
+canvas { 
+    background: #eee; 
+    display: block; 
+    margin: 0 auto; 
+}
+
 h1 {
     text-align: center;
+    letter-spacing: 3px;
 }
 
 table {
@@ -9,14 +20,27 @@ table {
     border-collapse: collapse;
     width: 30%;
     margin: auto;
+    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
 }
 
+#heading {
+    color: #1E90FF;
+    text-shadow: 3px 2px #7FFF00;
+}
 /*set td*/
 td {
     border-top: 1px solid #dad9d4;
     border-bottom: 1px solid #dad9d4;
+    background-color:   #F5F5F5;
 }
 
+#start {
+    text-shadow: 3px 2px red;
+}
+
+div {
+    text-align: center;
+}
 .num{
     text-align: left;
 }
@@ -29,4 +53,17 @@ td {
 /*align years column to right*/
 .score {
     text-align: right;
-} 
+}
+
+button {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
