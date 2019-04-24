@@ -1,8 +1,8 @@
 {
-  "name": "final-project",
+  "name": "final",
   "version": "1.0.0",
   "description": "final",
-  "start": "final.js",
+  "main": "final.js",
   "dependencies": {
     "client-sessions": "^0.8.0",
     "cookie-parser": "^1.4.4",
@@ -15,5 +15,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Allen&Augustine",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uacs337spring2019/final-project-yihan-augustine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uacs337spring2019/final-project-yihan-augustine/issues"
+  },
+  "homepage": "https://github.com/uacs337spring2019/final-project-yihan-augustine#readme"
 }
