@@ -4,6 +4,7 @@
 // Final project client code
 
 (function(){
+'use strict'
 let begin  = -1;
 let bricks = [];
 let rightarrow = false;
@@ -57,13 +58,12 @@ document.addEventListener("keydown", function(event){
     window.onload = function(){
         document.getElementById("restart").onclick = restart;
         let canvas = document.getElementById("myCanvas");
-        let context = canvas.getContext("2d");
         paddleX = (canvas.width-paddleWidth)/2;
         initBrick();
         draw();
         post();
         
-    }
+    };
 
     /**draw the canvas area and run it as designed.*/
     function draw () {
@@ -253,7 +253,7 @@ document.addEventListener("keydown", function(event){
         return true;
     }
 
-    //build div which can input player name
+    /**build div which can input player name*/
     function getname() {
         let username = document.createElement('input');
         username.type = "text";
@@ -273,7 +273,7 @@ document.addEventListener("keydown", function(event){
             .then(checkStatus)//check status
             .then(function(responseText) {
                 let result = document.getElementById("result");//get comments div
-                var table = document.createElement("table");
+                let table = document.createElement("table");
                 let tr = document.createElement("tr");//create head tr
                 let th1 = document.createElement('th');//create first column
                 let th2 = document.createElement('th');//create second column
@@ -299,7 +299,7 @@ document.addEventListener("keydown", function(event){
                     let score = document.createElement("td");//create an comment
                     score.setAttribute('class', 'score');
                     score.innerHTML = record[i]['score'];//display comment
-                    var num = document.createElement('td');//create the num
+                    let num = document.createElement('td');//create the num
                     num.setAttribute('class', 'num');//set class for first column
                     num.innerHTML = i+1;//get correct num
                     row.appendChild(num);//append column to row
@@ -308,7 +308,8 @@ document.addEventListener("keydown", function(event){
                     table.appendChild(row);//append message to comments
                 }
             })
-            .catch(function(error){ 
+            .catch(function(error){
+                console.log(error);
             });
     }
     
@@ -327,14 +328,16 @@ document.addEventListener("keydown", function(event){
                  'Content-Type' : 'application/json'
             },
             body : JSON.stringify(ranking)
-        }
+        };
         fetch("https://hit-bricks.herokuapp.com", fetchOptions)//post to service
             .then(checkStatus)
             .then(function(responseText) {
+                console.log(responseText);
                 alert("Your Ranking was Saved!");
-                setTimeout(restart,100)
+                setTimeout(restart,100);
             })
-            .catch(function(error){ 
+            .catch(function(error){
+                console.log(error);
             });
 
     }

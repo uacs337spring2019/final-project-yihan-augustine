@@ -1,4 +1,8 @@
 
+// CSC 337
+// Yihan Mo & Augustine Xu
+// Final project server code
+
 const express = require("express");//express module
 const app = express();
 var fs = require('fs');//read file module
@@ -56,3 +60,4 @@ app.get('/', function (req, res) {//get function
 })
 
 app.listen(process.env.PORT);
+
