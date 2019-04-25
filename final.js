@@ -1,3 +1,4 @@
+(function(){
 let begin  = -1;
 let bricks = [];
 let rightarrow = false;
@@ -342,4 +343,4 @@ document.addEventListener("keydown", function(event){
             return Promise.reject(new Error(response.status+":"+response.statusText));
         }
     }
- 
+})();
